@@ -4,7 +4,7 @@ import streamlit as st  # Streamlit for web app
 import pandas as pd  # Data manipulation
 import numpy as np  # Numerical operations
 import joblib  # Load serialized models
-import os  # File paths
+import pathlib  # For file paths
 import time  # Sleep for simulation
 import matplotlib.pyplot as plt  # Plotting
 import seaborn as sns  # Advanced plotting
@@ -23,7 +23,7 @@ Models were trained using cybersecurity datasets to distinguish normal vs. malic
 # ---------------------------------------------
 # Constants
 # ---------------------------------------------
-MODEL_DIR = "Models"  # Directory where models and assets are stored
+MODEL_DIR = pathlib.Path(__file__).parent / "Models"  # Directory where models and assets are stored
 DATA_SAMPLE_SIZE = 1000  # Max records for live simulation
 SLEEP_TIME = 0.4  # Delay between each live iteration
 
@@ -33,9 +33,9 @@ SLEEP_TIME = 0.4  # Delay between each live iteration
 @st.cache_resource  # Cache for better performance
 def load_model_and_scaler(name):
     try:
-        model_path = os.path.join(MODEL_DIR, f"{name.lower().replace(' ', '_')}_model.pkl")  # Model file path
-        scaler_path = os.path.join(MODEL_DIR, "scaler.pkl")  # Scaler file path
-        feature_path = os.path.join(MODEL_DIR, "training_features.pkl")  # Feature list path
+        model_path = MODEL_DIR / f"{name.lower().replace(' ', '_')}_model.pkl" #model file path
+        scaler_path = MODEL_DIR / "scaler.pkl"           #scaler file path
+        feature_path = MODEL_DIR / "training_features.pkl" # feature list path
         model = joblib.load(model_path)  # Load model
         scaler = joblib.load(scaler_path)  # Load scaler
         features = joblib.load(feature_path)  # Load column template
@@ -81,8 +81,8 @@ uploaded_file = st.file_uploader("Upload a CSV", type=["csv"])  # File uploader
 if uploaded_file:
     df = pd.read_csv(uploaded_file)  # Read uploaded file
 else:
-    demo_path = os.path.join(MODEL_DIR, "cybersecurity_intrusion_data.csv")  # Demo file path
-    if os.path.exists(demo_path):
+    demo_path = MODEL_DIR / "cybersecurity_intrusion_data.csv"
+    if demo_path.exists():
         df = pd.read_csv(demo_path)  # Load demo data
         st.info("✅ Using demo data from Models folder.")  # Notify user
     else:
