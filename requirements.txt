@@ -1,1 +1,1 @@
-streamlitpandasnumpyjoblibmatplotlibseabornscikit-learn 
+streamlitpandasnumpyjoblibmatplotlibseabornscikit-learnpython-dotenv 
