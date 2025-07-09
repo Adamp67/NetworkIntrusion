@@ -165,7 +165,7 @@ else:
 # ---------------------------------------------
 st.subheader("4. Compare Models")  # Section title
 try:
-    summary_df = pd.read_csv(os.path.join(MODEL_DIR, "Model_Comparison_Summary.csv"))  # Load summary
+    summary_df = pd.read_csv(MODEL_DIR / "Model_Comparison_Summary.csv")  # Load summary
     metric = st.selectbox("Select metric", ["Accuracy", "Precision", "Recall", "F1 Score", "AUC"])  # Metric selector
     sns.barplot(data=summary_df, x="Model", y=metric, palette="rocket")  # Plot bar chart
     plt.title(f"Model Comparison by {metric}")  # Add title
